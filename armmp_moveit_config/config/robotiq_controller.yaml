@@ -1,0 +1,45 @@
+# Effort Controllers ---------------------------------------
+gripper:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+     - gripper_finger_1_joint_1
+     - gripper_finger_1_joint_2
+     - gripper_finger_1_joint_3
+     - gripper_finger_2_joint_1
+     - gripper_finger_2_joint_2
+     - gripper_finger_2_joint_3
+     - gripper_finger_middle_joint_1
+     - gripper_finger_middle_joint_2
+     - gripper_finger_middle_joint_3
+     - gripper_palm_finger_1_joint
+     - gripper_palm_finger_2_joint
+  constraints:
+      goal_time: 0.04
+      stopped_velocity_tolerance: 0.05
+      gripper_finger_1_joint_1: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_1_joint_2: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_1_joint_3: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_2_joint_1: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_2_joint_2: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_2_joint_3: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_middle_joint_1: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_middle_joint_2: {trajectory: 0.005, goal: 0.005}
+      gripper_finger_middle_joint_3: {trajectory: 0.005, goal: 0.005}
+      gripper_palm_finger_1_joint: {trajectory: 0.005, goal: 0.005}
+      gripper_palm_finger_2_joint: {trajectory: 0.005, goal: 0.005}
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10
+  gains: # Required because we're controlling an effort interface
+    gripper_finger_1_joint_1: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_1_joint_2: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_1_joint_3: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_2_joint_1: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_2_joint_2: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_2_joint_3: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_middle_joint_1: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_middle_joint_2: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_finger_middle_joint_3: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_palm_finger_1_joint: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+    gripper_palm_finger_2_joint: {p: 1,  d: 0.5, i: 0, i_clamp: 0}
+      

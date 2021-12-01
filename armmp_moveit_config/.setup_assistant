@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: armmp
+    relative_path: armmp_description/urdf/armmp.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/ur10e_robotiq.srdf
+  CONFIG:
+    author_name: nico
+    author_email: nico@lingg.com
+    generated_timestamp: 1636033777

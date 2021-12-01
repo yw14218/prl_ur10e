@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="gripper_camera_mount">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="4.5207E-19 0.035453 -6.5774E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.11943" />
+      <inertia
+        ixx="0.00015472"
+        ixy="5.0596E-20"
+        ixz="1.5989E-20"
+        iyy="0.00010796"
+        iyz="6.9683E-07"
+        izz="0.00024696" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gripper_camera_mount/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.25098 0.25098 0.25098 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gripper_camera_mount/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

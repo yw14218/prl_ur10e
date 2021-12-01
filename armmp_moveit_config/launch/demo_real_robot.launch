@@ -1,0 +1,65 @@
+<launch>
+
+  <!-- specify the planning pipeline -->
+  <arg name="pipeline" default="ompl" />
+
+  <arg name="use_rviz" default="true" />
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <!-- By default, we will load or override the robot_description -->
+  <arg name="load_robot_description" default="false"/>
+
+  <!-- Set execution mode for fake execution controllers -->
+  <arg name="execution_type" default="interpolate" />
+
+  <!-- launch gripper driver -->
+  <arg name="gripper_ip" value="192.168.0.11"/>
+  <node pkg="robotiq_3f_gripper_control" name="Robotiq3FGripperTcpNode" type="Robotiq3FGripperTcpNode.py" output="screen" args="$(arg gripper_ip)"/>
+
+  <!-- launch gripper joint publisher -->
+  <node pkg="robotiq_3f_gripper_joint_state_publisher" name="robotiq_3f_gripper_joint_states" type="robotiq_3f_gripper_joint_states" output="screen" >
+     <remap from="/joint_states" to="/gripper/joint_states"/>
+     <param name="prefix" value="gripper_"/>
+  </node>
+
+  <!-- launch ur10 driver -->
+  <include file="$(find armmp)/launch/ur10e_driver.launch">
+    <arg name="robot_ip" value="192.168.0.100"/>
+  </include>
+  
+
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find armmp_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="execution_type" value="$(arg execution_type)"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="pipeline" value="$(arg pipeline)"/>
+    <arg name="load_robot_description" value="$(arg load_robot_description)"/>
+  </include>
+  
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="/use_gui" value="false"/>
+        <rosparam param="/source_list">["/joint_states", "/gripper/joint_states"]</rosparam>
+  </node>
+
+  <!-- launch realsense camera l515 -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="filters" value="pointcloud"/>
+    <arg name="camera" value="realsense2"/>
+    <arg name="ordered_pc" value="true"/>
+    <arg name="align_depth" value="true"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find armmp_moveit_config)/launch/moveit_rviz.launch" if="$(arg use_rviz)">
+    <arg name="rviz_config" value="$(find armmp_moveit_config)/launch/moveit.rviz"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+
+</launch>

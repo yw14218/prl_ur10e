@@ -1,0 +1,1617 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='robot'>
+      <joint name='world_joint' type='fixed'>
+        <pose relative_to='__model__'>0 0 0 0 -0 0</pose>
+        <parent>world</parent>
+        <child>base_link</child>
+      </joint>
+      <link name='base_link'>
+        <pose relative_to='world_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>4</mass>
+          <inertia>
+            <ixx>0.00610633</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00610633</iyy>
+            <iyz>0</iyz>
+            <izz>0.01125</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/collision/base.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='base_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/visual/base.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='shoulder_pan_joint' type='revolute'>
+        <pose relative_to='base_link'>0 0 0.181 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>shoulder_link</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-6.28319</lower>
+            <upper>6.28319</upper>
+            <effort>330</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>0</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='shoulder_link'>
+        <pose relative_to='shoulder_pan_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>7.778</mass>
+          <inertia>
+            <ixx>0.0314743</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0314743</iyy>
+            <iyz>0</iyz>
+            <izz>0.0218756</izz>
+          </inertia>
+        </inertial>
+        <collision name='shoulder_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/collision/shoulder.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='shoulder_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/visual/shoulder.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='shoulder_lift_joint' type='revolute'>
+        <pose relative_to='shoulder_link'>0 0.176 0 3.14159 1.57079 3.14159</pose>
+        <parent>shoulder_link</parent>
+        <child>upper_arm_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-6.28319</lower>
+            <upper>6.28319</upper>
+            <effort>330</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>0</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='upper_arm_link'>
+        <pose relative_to='shoulder_lift_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0.3065 0 -0 0</pose>
+          <mass>12.93</mass>
+          <inertia>
+            <ixx>0.423074</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.423074</iyy>
+            <iyz>0</iyz>
+            <izz>0.0363656</izz>
+          </inertia>
+        </inertial>
+        <collision name='upper_arm_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/collision/upperarm.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='upper_arm_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/visual/upperarm.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='elbow_joint' type='revolute'>
+        <pose relative_to='upper_arm_link'>0 -0.137 0.613 0 -0 0</pose>
+        <parent>upper_arm_link</parent>
+        <child>forearm_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-3.14159</lower>
+            <upper>3.14159</upper>
+            <effort>150</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>0</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='forearm_link'>
+        <pose relative_to='elbow_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0.2855 0 -0 0</pose>
+          <mass>3.87</mass>
+          <inertia>
+            <ixx>0.11059</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.11059</iyy>
+            <iyz>0</iyz>
+            <izz>0.0108844</izz>
+          </inertia>
+        </inertial>
+        <collision name='forearm_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/collision/forearm.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='forearm_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/visual/forearm.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='wrist_1_joint' type='revolute'>
+        <pose relative_to='forearm_link'>0 0 0.571 3.14159 1.57079 3.14159</pose>
+        <parent>forearm_link</parent>
+        <child>wrist_1_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-6.28319</lower>
+            <upper>6.28319</upper>
+            <effort>54</effort>
+            <velocity>6.28</velocity>
+          </limit>
+          <dynamics>
+            <damping>0</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='wrist_1_link'>
+        <pose relative_to='wrist_1_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0.135 0 0 -0 0</pose>
+          <mass>1.96</mass>
+          <inertia>
+            <ixx>0.00510825</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00510825</iyy>
+            <iyz>0</iyz>
+            <izz>0.0055125</izz>
+          </inertia>
+        </inertial>
+        <collision name='wrist_1_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/collision/wrist1.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='wrist_1_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/visual/wrist1.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='wrist_2_joint' type='revolute'>
+        <pose relative_to='wrist_1_link'>0 0.135 0 0 -0 0</pose>
+        <parent>wrist_1_link</parent>
+        <child>wrist_2_link</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-6.28319</lower>
+            <upper>6.28319</upper>
+            <effort>54</effort>
+            <velocity>6.28</velocity>
+          </limit>
+          <dynamics>
+            <damping>0</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='wrist_2_link'>
+        <pose relative_to='wrist_2_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0.12 0 -0 0</pose>
+          <mass>1.96</mass>
+          <inertia>
+            <ixx>0.00510825</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00510825</iyy>
+            <iyz>0</iyz>
+            <izz>0.0055125</izz>
+          </inertia>
+        </inertial>
+        <collision name='wrist_2_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/collision/wrist2.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='wrist_2_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/visual/wrist2.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='wrist_3_joint' type='revolute'>
+        <pose relative_to='wrist_2_link'>0 0 0.12 0 -0 0</pose>
+        <parent>wrist_2_link</parent>
+        <child>wrist_3_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-6.28319</lower>
+            <upper>6.28319</upper>
+            <effort>54</effort>
+            <velocity>6.28</velocity>
+          </limit>
+          <dynamics>
+            <damping>0</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='wrist_3_link'>
+        <pose relative_to='wrist_3_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0.025229 0.083963 0.00321 1.5708 -0 0</pose>
+          <mass>0.46643</mass>
+          <inertia>
+            <ixx>0.00313162</ixx>
+            <ixy>-0.000394724</ixy>
+            <ixz>0.000375375</ixz>
+            <iyy>0.00371726</iyy>
+            <iyz>0.000463864</iyz>
+            <izz>0.0114536</izz>
+          </inertia>
+        </inertial>
+        <collision name='wrist_3_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/collision/wrist3.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='wrist_3_link_fixed_joint_lump__ee_link_collision_1'>
+          <pose>-0 0.107 0 0 -0 1.5708</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='wrist_3_link_fixed_joint_lump__gripper_camera_mount_base_link_collision_2'>
+          <pose>0 0 0.0129 -1.57079 3e-06 -0.785401</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/ur10e_robotiq/gripper_camera_mount/meshes/base_link.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='wrist_3_link_fixed_joint_lump__realsense2_link_collision_3'>
+          <pose>0.115028 0.115027 0.022273 0.34907 -1e-06 -0.785401</pose>
+          <geometry>
+            <cylinder>
+              <length>0.026</length>
+              <radius>0.0305</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='wrist_3_link_fixed_joint_lump__realsense2_usb_plug_link_collision_4'>
+          <pose>0.072913 0.120794 0.011002 -1.31889 -0.24427 -0.031084</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/realsense-ros/realsense2_description/meshes/plug_collision.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='wrist_3_link_fixed_joint_lump__gripper_palm_collision_5'>
+          <pose>0 0.187 0 4e-06 -0.785398 -0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/palm.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='wrist_3_link_fixed_joint_lump__gripper_finger_middle_link_0_collision_6'>
+          <pose>0.032185 0.2284 0.032185 -0.785398 -0.000566 1.57024</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_0.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='wrist_3_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/universal_robot/ur_e_description/meshes/ur10e/visual/wrist3.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='wrist_3_link_fixed_joint_lump__gripper_camera_mount_base_link_visual_1'>
+          <pose>0 0 0.0129 -1.57079 3e-06 -0.785401</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/ur10e_robotiq/gripper_camera_mount/meshes/base_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='wrist_3_link_fixed_joint_lump__realsense2_link_visual_2'>
+          <pose>0.111884 0.111883 0.034489 0.34907 -1e-06 -0.785401</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/realsense-ros/realsense2_description/meshes/l515.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='wrist_3_link_fixed_joint_lump__realsense2_usb_plug_link_visual_3'>
+          <pose>0.072913 0.120794 0.011002 -1.31889 -0.24427 -0.031084</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/realsense-ros/realsense2_description/meshes/plug.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='wrist_3_link_fixed_joint_lump__gripper_palm_visual_4'>
+          <pose>0 0.187 0 4e-06 -0.785398 -0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/palm.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='wrist_3_link_fixed_joint_lump__gripper_finger_middle_link_0_visual_5'>
+          <pose>0.032185 0.2284 0.032185 -0.785398 -0.000566 1.57024</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_0.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_palm_finger_1_joint' type='revolute'>
+        <pose relative_to='wrist_3_link'>-0.057629 0.2084 -0.006717 2.3562 0.000555 1.57137</pose>
+        <parent>wrist_3_link</parent>
+        <child>gripper_finger_1_link_0</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.1784</lower>
+            <upper>0.192</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_1_link_0'>
+        <pose relative_to='gripper_palm_finger_1_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>0.01</ixx>
+            <ixy>-2e-05</ixy>
+            <ixz>1e-05</ixz>
+            <iyy>0.0008</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_1_link_0_collision'>
+          <pose>0.02 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_0.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_1_link_0_visual'>
+          <pose>0.02 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_0.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_1_joint_1' type='revolute'>
+        <pose relative_to='gripper_finger_1_link_0'>0.02 0 0 0 -0 0</pose>
+        <parent>gripper_finger_1_link_0</parent>
+        <child>gripper_finger_1_link_1</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0.0495</lower>
+            <upper>1.2218</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_1_link_1'>
+        <pose relative_to='gripper_finger_1_joint_1'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.15</mass>
+          <inertia>
+            <ixx>0.001859</ixx>
+            <ixy>-0.000376</ixy>
+            <ixz>2.8e-05</ixz>
+            <iyy>0.012756</iyy>
+            <iyz>0</iyz>
+            <izz>0.0024</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_1_link_1_collision'>
+          <pose>0.05 -0.028 0 0 0 -0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_1.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_1_link_1_visual'>
+          <pose>0.05 -0.028 0 0 0 -0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_1.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_1_joint_2' type='revolute'>
+        <pose relative_to='gripper_finger_1_link_1'>0.05 -0.028 0 0 0 -0.52</pose>
+        <parent>gripper_finger_1_link_1</parent>
+        <child>gripper_finger_1_link_2</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>1.5708</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_1_link_2'>
+        <pose relative_to='gripper_finger_1_joint_2'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.15</mass>
+          <inertia>
+            <ixx>0.001859</ixx>
+            <ixy>-0.000376</ixy>
+            <ixz>2.8e-05</ixz>
+            <iyy>0.012756</iyy>
+            <iyz>0</iyz>
+            <izz>0.0024</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_1_link_2_collision'>
+          <pose>0.039 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_2.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_1_link_2_visual'>
+          <pose>0.039 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_2.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_1_joint_3' type='revolute'>
+        <pose relative_to='gripper_finger_1_link_2'>0.039 0 0 0 -0 0</pose>
+        <parent>gripper_finger_1_link_2</parent>
+        <child>gripper_finger_1_link_3</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.2217</lower>
+            <upper>-0.0523</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_1_link_3'>
+        <pose relative_to='gripper_finger_1_joint_3'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>0.001239</ixx>
+            <ixy>-0.000251</ixy>
+            <ixz>1.9e-05</ixz>
+            <iyy>0.00085</iyy>
+            <iyz>0</iyz>
+            <izz>0.001632</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_1_link_3_collision'>
+          <pose>0 0 0 0 -0 0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_3.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_1_link_3_visual'>
+          <pose>0 0 0 0 -0 0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_3.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_palm_finger_2_joint' type='revolute'>
+        <pose relative_to='wrist_3_link'>-0.006718 0.2084 -0.057629 2.3562 0.000555 1.57137</pose>
+        <parent>wrist_3_link</parent>
+        <child>gripper_finger_2_link_0</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.192</lower>
+            <upper>0.1784</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_2_link_0'>
+        <pose relative_to='gripper_palm_finger_2_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>0.01</ixx>
+            <ixy>-2e-05</ixy>
+            <ixz>1e-05</ixz>
+            <iyy>0.0008</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_2_link_0_collision'>
+          <pose>0.02 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_0.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_2_link_0_visual'>
+          <pose>0.02 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_0.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_2_joint_1' type='revolute'>
+        <pose relative_to='gripper_finger_2_link_0'>0.02 0 0 0 -0 0</pose>
+        <parent>gripper_finger_2_link_0</parent>
+        <child>gripper_finger_2_link_1</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0.0495</lower>
+            <upper>1.2218</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_2_link_1'>
+        <pose relative_to='gripper_finger_2_joint_1'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.15</mass>
+          <inertia>
+            <ixx>0.001859</ixx>
+            <ixy>-0.000376</ixy>
+            <ixz>2.8e-05</ixz>
+            <iyy>0.012756</iyy>
+            <iyz>0</iyz>
+            <izz>0.0024</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_2_link_1_collision'>
+          <pose>0.05 -0.028 0 0 0 -0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_1.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_2_link_1_visual'>
+          <pose>0.05 -0.028 0 0 0 -0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_1.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_2_joint_2' type='revolute'>
+        <pose relative_to='gripper_finger_2_link_1'>0.05 -0.028 0 0 0 -0.52</pose>
+        <parent>gripper_finger_2_link_1</parent>
+        <child>gripper_finger_2_link_2</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>1.5708</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_2_link_2'>
+        <pose relative_to='gripper_finger_2_joint_2'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.15</mass>
+          <inertia>
+            <ixx>0.001859</ixx>
+            <ixy>-0.000376</ixy>
+            <ixz>2.8e-05</ixz>
+            <iyy>0.012756</iyy>
+            <iyz>0</iyz>
+            <izz>0.0024</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_2_link_2_collision'>
+          <pose>0.039 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_2.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_2_link_2_visual'>
+          <pose>0.039 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_2.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_2_joint_3' type='revolute'>
+        <pose relative_to='gripper_finger_2_link_2'>0.039 0 0 0 -0 0</pose>
+        <parent>gripper_finger_2_link_2</parent>
+        <child>gripper_finger_2_link_3</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.2217</lower>
+            <upper>-0.0523</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_2_link_3'>
+        <pose relative_to='gripper_finger_2_joint_3'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>0.001239</ixx>
+            <ixy>-0.000251</ixy>
+            <ixz>1.9e-05</ixz>
+            <iyy>0.00085</iyy>
+            <iyz>0</iyz>
+            <izz>0.001632</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_2_link_3_collision'>
+          <pose>0 0 0 0 -0 0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_3.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_2_link_3_visual'>
+          <pose>0 0 0 0 -0 0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_3.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_middle_joint_1' type='revolute'>
+        <pose relative_to='wrist_3_link'>0.032185 0.2284 0.032185 -0.785398 -0.000566 1.57024</pose>
+        <parent>wrist_3_link</parent>
+        <child>gripper_finger_middle_link_1</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0.0495</lower>
+            <upper>1.2218</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_middle_link_1'>
+        <pose relative_to='gripper_finger_middle_joint_1'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.15</mass>
+          <inertia>
+            <ixx>0.001859</ixx>
+            <ixy>-0.000376</ixy>
+            <ixz>2.8e-05</ixz>
+            <iyy>0.012756</iyy>
+            <iyz>0</iyz>
+            <izz>0.0024</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_middle_link_1_collision'>
+          <pose>0.05 -0.028 0 0 0 -0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_1.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_middle_link_1_visual'>
+          <pose>0.05 -0.028 0 0 0 -0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_1.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_middle_joint_2' type='revolute'>
+        <pose relative_to='gripper_finger_middle_link_1'>0.05 -0.028 0 0 0 -0.52</pose>
+        <parent>gripper_finger_middle_link_1</parent>
+        <child>gripper_finger_middle_link_2</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>1.5708</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_middle_link_2'>
+        <pose relative_to='gripper_finger_middle_joint_2'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.15</mass>
+          <inertia>
+            <ixx>0.001859</ixx>
+            <ixy>-0.000376</ixy>
+            <ixz>2.8e-05</ixz>
+            <iyy>0.012756</iyy>
+            <iyz>0</iyz>
+            <izz>0.0024</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_middle_link_2_collision'>
+          <pose>0.039 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_2.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_middle_link_2_visual'>
+          <pose>0.039 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_2.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='gripper_finger_middle_joint_3' type='revolute'>
+        <pose relative_to='gripper_finger_middle_link_2'>0.039 0 0 0 -0 0</pose>
+        <parent>gripper_finger_middle_link_2</parent>
+        <child>gripper_finger_middle_link_3</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.2217</lower>
+            <upper>-0.0523</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='gripper_finger_middle_link_3'>
+        <pose relative_to='gripper_finger_middle_joint_3'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>0.001239</ixx>
+            <ixy>-0.000251</ixy>
+            <ixz>1.9e-05</ixz>
+            <iyy>0.00085</iyy>
+            <iyz>0</iyz>
+            <izz>0.001632</izz>
+          </inertia>
+        </inertial>
+        <collision name='gripper_finger_middle_link_3_collision'>
+          <pose>0 0 0 0 -0 0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/collision/link_3.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='gripper_finger_middle_link_3_visual'>
+          <pose>0 0 0 0 -0 0.52</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yilong/catkin_ws/src/robotiq/robotiq_3f_gripper_visualization/meshes/robotiq-3f-gripper_articulated/visual/link_3.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <static>0</static>
+      <plugin name='ros_control' filename='libgazebo_ros_control.so'>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <pose>0 0 0.1 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>57 267000000</sim_time>
+      <real_time>62 837688063</real_time>
+      <wall_time>1637869881 336403676</wall_time>
+      <iterations>57267</iterations>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='robot'>
+        <pose>0 -0 0.100001 7.5e-05 -0.000264 5.1e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='base_link'>
+          <pose>0 -0 0.100001 7.5e-05 -0.000264 5.1e-05</pose>
+          <velocity>-0.000101 0.000137 -9e-06 -0.002198 0.002837 -0.022031</velocity>
+          <acceleration>-0.106944 0.132359 0.040904 -0.822688 -0.187787 1.50257</acceleration>
+          <wrench>-0.427776 0.529435 0.163614 0 -0 0</wrench>
+        </link>
+        <link name='forearm_link'>
+          <pose>0.613139 0.03465 0.275977 -3.11495 1.56232 -3.12204</pose>
+          <velocity>0.015161 0.013183 -0.022479 0.016067 0.041291 0.032276</velocity>
+          <acceleration>12.6954 41.4191 -23.3488 1.40721 0.88557 1.32091</acceleration>
+          <wrench>49.131 160.292 -90.3599 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_1_link_0'>
+          <pose>1.24222 0.382069 0.158169 -0.812095 0.132424 1.44869</pose>
+          <velocity>-1.51135 -1.67248 0.108981 0.056761 -0.011084 1.57908</velocity>
+          <acceleration>-1637.58 -1810.94 197.836 -2.45622 -0.556611 -0.626354</acceleration>
+          <wrench>-81.8788 -90.5469 9.89179 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_1_link_1'>
+          <pose>1.24466 0.402045 0.155389 -0.72726 0.41778 1.75106</pose>
+          <velocity>-1.54859 -1.7432 0.144593 0.413052 1.2395 1.91472</velocity>
+          <acceleration>-1670.01 -1914.47 315.606 -3.09834 -0.019624 0.862149</acceleration>
+          <wrench>-250.502 -287.171 47.3408 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_1_link_2'>
+          <pose>1.25363 0.455113 0.152803 -0.446369 0.713844 2.26408</pose>
+          <velocity>-0.23746 -1.04501 0.923913 -2.84962 -0.836152 -1.825</velocity>
+          <acceleration>-1012.07 -983.817 301.884 0.410107 -0.921346 3.05071</acceleration>
+          <wrench>-151.811 -147.572 45.2825 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_1_link_3'>
+          <pose>1.23477 0.477788 0.127251 -0.712632 0.448569 1.78963</pose>
+          <velocity>-0.170738 -0.922853 0.989779 -1.23569 -1.24287 2.90778</velocity>
+          <acceleration>-1020.1 -948.085 342.404 0.707809 0.441941 -2.86704</acceleration>
+          <wrench>-51.005 -47.4042 17.1202 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_2_link_0'>
+          <pose>1.18434 0.380094 0.21438 -0.81518 -0.143385 1.73528</pose>
+          <velocity>0.013428 -1.48247 -1.44169 -2.58284 0.313669 -0.582833</velocity>
+          <acceleration>182.422 -1721.6 -1322.4 1.75489 1.16577 3.03436</acceleration>
+          <wrench>9.12112 -86.0801 -66.12 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_2_link_1'>
+          <pose>1.1812 0.399799 0.217378 -0.795371 0.250435 2.1081</pose>
+          <velocity>0.001444 -1.51728 -1.52583 2.27655 0.135454 0.899903</velocity>
+          <acceleration>177.949 -1715.93 -1432.91 0.436995 -0.400206 -1.42374</acceleration>
+          <wrench>26.6924 -257.389 -214.936 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_2_link_2'>
+          <pose>1.17043 0.452939 0.221925 -0.821529 0.080261 1.94336</pose>
+          <velocity>0.56739 -0.767749 -0.58151 -1.29468 0.660816 -1.74828</velocity>
+          <acceleration>432.47 -926.626 -715.877 -2.83819 0.289908 3.09518</acceleration>
+          <wrench>64.8705 -138.994 -107.382 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_2_link_3'>
+          <pose>1.15628 0.489146 0.218807 -0.46913 -0.705737 0.961507</pose>
+          <velocity>0.627203 -0.746591 -0.621107 -1.47574 0.606951 -1.58272</velocity>
+          <acceleration>497.23 -904.104 -761.949 1.30316 -0.085083 -0.434099</acceleration>
+          <wrench>24.8615 -45.2052 -38.0974 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_middle_link_1'>
+          <pose>1.14605 0.391263 0.117431 2.34703 -0.131835 1.4633</pose>
+          <velocity>0.141317 0.506646 0.179086 -1.6898 -0.01758 2.28124</velocity>
+          <acceleration>401.384 734.863 602.166 1.33504 0.88986 2.04618</acceleration>
+          <wrench>60.2076 110.23 90.3249 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_middle_link_2'>
+          <pose>1.13213 0.44525 0.104188 2.35681 0.191805 1.78029</pose>
+          <velocity>0.022913 0.454901 0.088683 0.717715 0.012723 -0.05388</velocity>
+          <acceleration>238.245 668.414 499.964 -2.43706 0.628641 2.6468</acceleration>
+          <wrench>35.7368 100.262 74.9946 0 -0 0</wrench>
+        </link>
+        <link name='gripper_finger_middle_link_3'>
+          <pose>1.12416 0.482693 0.096749 2.43729 0.424008 2.04263</pose>
+          <velocity>0.027338 0.461761 0.116247 0.602063 0.005574 0.056215</velocity>
+          <acceleration>199.309 661.747 508.137 2.68999 0.472281 0.184739</acceleration>
+          <wrench>9.96546 33.0874 25.4068 0 -0 0</wrench>
+        </link>
+        <link name='shoulder_link'>
+          <pose>-7.8e-05 5e-06 0.280999 -0.0002 0.000505 -0.007014</pose>
+          <velocity>0.007904 -0.009682 2e-05 0.024035 0.008165 -0.00163</velocity>
+          <acceleration>6.63648 -1.71968 -0.07179 -1.53393 -0.607229 -1.09686</acceleration>
+          <wrench>51.6186 -13.3757 -0.558383 0 -0 0</wrench>
+        </link>
+        <link name='upper_arm_link'>
+          <pose>0.001145 0.175998 0.28095 -3.11114 1.56264 -3.11822</pose>
+          <velocity>0.01087 -0.00885 0.004733 0.018515 0.040921 0.030968</velocity>
+          <acceleration>6.52169 12.8416 10.5732 -2.79805 -0.096757 -0.910073</acceleration>
+          <wrench>84.3255 166.042 136.711 0 -0 0</wrench>
+        </link>
+        <link name='wrist_1_link'>
+          <pose>1.18417 0.030603 0.271133 -3.14135 -0.012427 3.13458</pose>
+          <velocity>-0.000708 0.032401 -0.054239 0.008275 0.04634 0.014379</velocity>
+          <acceleration>10.9006 55.8939 16.2346 -2.1632 1.29419 0.951892</acceleration>
+          <wrench>21.3652 109.552 31.8198 0 -0 0</wrench>
+        </link>
+        <link name='wrist_2_link'>
+          <pose>1.18514 0.165624 0.271097 3.14136 -0.012284 -3.11822</pose>
+          <velocity>-0.011328 0.02312 -0.052772 -0.032345 0.083611 0.020936</velocity>
+          <acceleration>1.84102 111.472 16.187 -1.87653 -1.08932 -1.02156</acceleration>
+          <wrench>3.60839 218.484 31.7265 0 -0 0</wrench>
+        </link>
+        <link name='wrist_3_link'>
+          <pose>1.18295 0.163736 0.15079 -3.13941 0.017936 -3.11871</pose>
+          <velocity>0.156966 0.489126 0.023946 0.558823 0.099142 0.158385</velocity>
+          <acceleration>264.618 653.169 266.379 -2.79642 0.166368 1.57623</acceleration>
+          <wrench>123.426 304.658 124.247 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>1.95043 -0.866097 0.464259 0 0.275643 2.35619</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
