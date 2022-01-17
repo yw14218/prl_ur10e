@@ -14,7 +14,7 @@
   <!-- startup simulated world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <!--arg name="world_name" default="worlds/empty.world"/-->
-    <arg name="world_name" default="$(find armmp)/armmp_description/worlds/ur10e_cubes.world"/>
+    <arg name="world_name" default="$(find armmp)/armmp_description/worlds/ur10e_table.world"/>
     <arg name="paused" value="$(arg paused)"/>
     <arg name="gui" value="$(arg gui)"/>
   </include>
@@ -27,10 +27,9 @@
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -param robot_description -model robot 
-              -z 0.894
-              -x -0.484
-              -y -0.468
+        args="-urdf -param robot_description -model robot
+              -y -0.400
+              -x -0.400 
               -J shoulder_lift_joint -2.0
               -J elbow_joint 1.0"
         output="screen" />
@@ -38,7 +37,7 @@
   <!--controller-->
   <include file="$(find ur_e_gazebo)/launch/controller_utils.launch"/>
   <rosparam file="$(find armmp_moveit_config)/config/arm_controller_ur10e.yaml" command="load" />
-  <rosparam file="$(find armmp_moveit_config)/config/robotiq_controller.yaml" command="load" />
+  <rosparam file="$(find armmp_moveit_config)/config/gripper_controller_3f.yaml" command="load" />
   <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller gripper" respawn="false" output="screen"/>
 
   <!-- load other controllers -->

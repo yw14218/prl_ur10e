@@ -564,10 +564,5 @@ class MoveGroupGrasp(object):
         return False
         ## END_SUB_TUTORIAL
 
-    
-
-
-
-
     if __name__ == "__main__":
         main()

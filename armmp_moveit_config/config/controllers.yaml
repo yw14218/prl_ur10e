@@ -15,4 +15,14 @@ controller_list:
     type: FollowJointTrajectory
     default: true
     joints:
-      - gripper_finger1_joint
+      - gripper_palm_finger_1_joint
+      - gripper_finger_1_joint_1
+      - gripper_finger_1_joint_2
+      - gripper_finger_1_joint_3
+      - gripper_palm_finger_2_joint
+      - gripper_finger_2_joint_1
+      - gripper_finger_2_joint_2
+      - gripper_finger_2_joint_3
+      - gripper_finger_middle_joint_1
+      - gripper_finger_middle_joint_2
+      - gripper_finger_middle_joint_3
