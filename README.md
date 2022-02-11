@@ -25,7 +25,7 @@ $ roslaunch find_object_2d find_object_2d.launch
 ```
  
  ![alt text](https://github.com/yw14218/prl_ur10e/blob/master/camera/Screenshot%20from%202022-01-17%2000-30-22.png)
- ![alt text](https://github.com/yw14218/prl_ur10e/blob/master/camera/.png)
+ ![alt text](https://github.com/yw14218/prl_ur10e/blob/master/camera/Screenshot from 2022-02-06 21-26-56.png)
  
 (2) Integrated Gazebo + MoveIt Simulation
 ```
